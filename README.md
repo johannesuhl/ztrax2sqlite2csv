@@ -7,9 +7,9 @@ Requirements: Python 3.7 & Safe Software Feature Manpulation Engine (tested for 
 
 1)	Extract ZTRAX ZIP into subfolder.
 2)	Extract each state zip into a state subfolder (eg all csvs in 01.zip must be in \01\*.csv).7-ZIP can do that using the Extract to * command.
-3)	Copy these subfolders in a separate folder “CSV”.
+3)	Copy these subfolders in a separate folder “CSV”. Check the scripts and create all subfolders specified, and adjust paths.
 4)	Prepare script 01_generate_SQLite_databases_separate.py: Set zipfolder path and dbpath. Also, place the metadata files in the same directory as the script.
-5)	Open the Layout.xlsx and copy the ZAsmt tab into a csv called Layout_ZAsmt.csv in the scripts folder – likewise for zTrans.
+5)	Open the Layout.xlsx and copy the ZAsmt tab into a csv called Layout_ZAsmt.csv in the scripts folder – likewise for zTrans. Also copy the 
 6)	Run 01_generate_SQLite_databases_separate.py. This will generate empty SQLITE databases in the db_path folder.
 7)	Run 02_append_headers_to_csv_files.py. Set paths in script prior to that. This will append the column headers to each csv file. 
 8)	In the first version imported in 2017, some “NULL” characters in specific csv files caused FME to crash. The script 03_remove_NUL_characters.py will search for these characters and replace them by “0”. If these errors occur in 10), this script can be used to clean the csv files.
