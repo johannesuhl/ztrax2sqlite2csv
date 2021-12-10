@@ -1,6 +1,8 @@
 # ztrax2sqlite2csv
 A FME- and Python based workflow to import ZTRAX into a set of SQLite databases, and from there into county-level CSV files
 
+Johannes H. Uhl, CIRES & IBS, University of Colorado Boulder.
+
 1)	Extract ZTRAX ZIP into subfolder.
 2)	Extract each state zip into a state subfolder (eg all csvs in 01.zip must be in \01\*.csv).7-ZIP can do that using the Extract to * command.
 3)	Copy these subfolders in a separate folder “CSV”.
