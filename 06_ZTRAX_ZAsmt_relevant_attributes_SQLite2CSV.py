@@ -44,6 +44,15 @@ joinatt_lookup.append(['cont_zasmt_utbuilding',['RowID','BuildingOrImprovementNu
 joinatt_lookup.append(['cont_zasmt_uttypeconstruction',['RowID','BuildingOrImprovementNumber']])
 joinatt_lookup.append(['cont_zasmt_utbuildingAreas',['RowID','BuildingOrImprovementNumber']])
 
+## the join types used - depending whether there is a 1:1 or 1:n relationship
+jointype_lookup=[]
+jointype_lookup.append(['cont_zasmt_utvalue','left'])
+jointype_lookup.append(['cont_zasmt_utmailaddress','left'])
+jointype_lookup.append(['cont_zasmt_utexteriorwall','right'])
+jointype_lookup.append(['cont_zasmt_utbuilding','right'])
+jointype_lookup.append(['cont_zasmt_uttypeconstruction','right'])
+jointype_lookup.append(['cont_zasmt_utbuildingAreas','right'])
+
 aggregate_indoorareas_to_buildings=True
 aggregate_buildings_to_properties=True
 
@@ -147,7 +156,13 @@ if get_COUNTYLEVEL_data_from_sqlite:
                                 addtl_data_df.BuildingOrImprovementNumber=addtl_data_df.BuildingOrImprovementNumber.map(str)
                             except:
                                 True
-                            datadf = datadf.copy().merge(right=addtl_data_df,on=joincols,how='outer')
+                                
+                            for jointype in jointype_lookup:
+                                if jointype[0]==sqlitetablename:
+                                    jointype=jointype[1]
+                                    break                            
+                            
+                            datadf = datadf.copy().merge(right=addtl_data_df,on=joincols,how=jointype)
                             datadf=datadf.reset_index(drop=True) 
                             print('datadf',len(datadf))
                     print('county done', county)
@@ -205,17 +220,6 @@ if get_COUNTYLEVEL_data_from_sqlite:
         print('writing %s property rows to csv...' %len(datadf))
         datadf.to_csv(csv_folder+os.sep+'ztrax_2021_extraction_county_properties_%s.csv' %county,index=False)        
         
-        
-                
-        
-        
-        
-        
-        
-        
-        
-        
-        
         print(countycount,len(countyfipss),'ztrax attributes written to file. COUNTY:', county) 
         #sys.exit(0)
         del datadf
@@ -224,4 +228,3 @@ if get_COUNTYLEVEL_data_from_sqlite:
         except:
             pass
             
-        #sys.exit(0)    
