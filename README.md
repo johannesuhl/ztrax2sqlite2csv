@@ -1,7 +1,7 @@
 # ztrax2sqlite2csv
 # An FME- and Python based workflow to import ZTRAX into a set of SQLite databases, and from there into county-level CSV files.
 
-Johannes H. Uhl, CIRES & IBS, University of Colorado Boulder, December 2021.
+Johannes H. Uhl, Earthlab, Cooperative Institute for Research in Environmental Sciences (CIRES) & Institute of Behavioral Science (IBS), University of Colorado Boulder, December 2021.
 
 Requirements: Python 3.7 & Safe Software Feature Manpulation Engine (tested for v2017 and v2019).
 
