@@ -7,10 +7,9 @@ Created on Wed Nov 04 06:36:47 2020
 
 #### for a given list of US counties, script loops ZAsmt databases and extracts attributes as specified below.
 #### records are joined to the utmain table.
-#### outputs: 
-#### (a) a csv per county with one area type (from utbuildingarea) is stored per row.
-#### (b) a csv per county with one building (unique id: RowID+BuildingOrImprovementNumber).Areas are aggregated per building (very optimistic area estimate, as buildingareastdtypes can be non-exclusive)
-#### 
+#### output: 
+#### a csv per county with all area type records (from utbuildingarea) per building and property.
+
 import sqlite3
 from sqlite3 import Error
 import os,sys
