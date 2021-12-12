@@ -148,8 +148,10 @@ if get_COUNTYLEVEL_data_from_sqlite:
                             for joinatt in joinatt_lookup:
                                 if joinatt[0]==sqlitetablename:
                                     joincols=joinatt[1]
+                                    ###make sure that tables and columns exist (eg in CA, utexteriorwall does not exist!?)
+                                    joincols=[x for x in joincols if x in datadf.columns]
                                     break
-                                
+									
                             print ('joining...', county)
                             try:
                                 addtl_data_df.BuildingOrImprovementNumber=addtl_data_df.BuildingOrImprovementNumber.map(str)
