@@ -184,42 +184,6 @@ if get_COUNTYLEVEL_data_from_sqlite:
             continue
         
         datadf.to_csv(csv_folder+os.sep+'ztrax_2021_extraction_county_areatypes_%s.csv' %county,index=False)        
-        
-        datadf_orig=datadf.copy()
-        if aggregate_indoorareas_to_buildings:
-            print('aggregating areas to buildings...')
-            try:
-                datadf.BuildingAreaSqFt =datadf.BuildingAreaSqFt.replace('',0.0)         
-                datadf.BuildingAreaSqFt =datadf.BuildingAreaSqFt.fillna(0.0)
-                datadf.BuildingAreaSqFt = datadf.BuildingAreaSqFt.map(float)
-                
-                ### aggregate indoor area per building:
-                datadf_temp = datadf[['RowID','BuildingOrImprovementNumber','BuildingAreaSqFt','BuildingAreaStndCode']].groupby(['RowID','BuildingOrImprovementNumber']).BuildingAreaSqFt.sum().reset_index()
-                datadf=datadf.drop(labels=['BuildingAreaSqFt','BuildingAreaStndCode'],axis=1)                        
-                datadf2=datadf_temp.merge(datadf,on=['RowID','BuildingOrImprovementNumber'],how='left')
-                datadf2=datadf2.drop_duplicates(subset=['RowID','BuildingOrImprovementNumber'])  
-                datadf = datadf2.copy()
-            except:
-                pass
-        print('writing %s building rows to csv...' %len(datadf))
-        datadf.to_csv(csv_folder+os.sep+'ztrax_2021_extraction_county_buildings_%s.csv' %county,index=False)        
-        
-        datadf=datadf_orig.copy()
-        if aggregate_buildings_to_properties:
-            print('aggregating buildings to properties...')
-            try:
-                
-                ### aggregate indoor area per property:
-                datadf_temp = datadf[['RowID','BuildingAreaSqFt','BuildingAreaStndCode']].groupby(['RowID']).BuildingAreaSqFt.sum().reset_index()
-                datadf=datadf.drop(labels=['BuildingAreaSqFt','BuildingAreaStndCode'],axis=1)                        
-                datadf2=datadf_temp.merge(datadf,on=['RowID'],how='left')
-                datadf2=datadf2.drop_duplicates(subset=['RowID'])  
-                datadf = datadf2.copy()
-            except:
-                pass
-        print('writing %s property rows to csv...' %len(datadf))
-        datadf.to_csv(csv_folder+os.sep+'ztrax_2021_extraction_county_properties_%s.csv' %county,index=False)        
-        
         print(countycount,len(countyfipss),'ztrax attributes written to file. COUNTY:', county) 
         #sys.exit(0)
         del datadf
