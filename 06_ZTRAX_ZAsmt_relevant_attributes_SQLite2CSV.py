@@ -149,7 +149,7 @@ if get_COUNTYLEVEL_data_from_sqlite:
                                 if joinatt[0]==sqlitetablename:
                                     joincols=joinatt[1]
                                     ###make sure that tables and columns exist (eg in CA, utexteriorwall does not exist!?)
-                                    joincols=[x for x in joincols if x in datadf.columns]
+                                    #joincols=[x for x in joincols if x in datadf.columns] ###issue here
                                     break
 									
                             print ('joining...', county)
